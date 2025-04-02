@@ -14,11 +14,10 @@ Created on Tue Apr  1 15:44:00 2025
 
 import numpy as np
 from scipy.integrate import solve_ivp
-from scipy.integrate import OdeSolver
-from matplotlib import pyplot as plt
+#from matplotlib import pyplot as plt
 
 #time
-sec=10000
+sec=4000
 step=sec*100
 ts = np.linspace(0, sec, step)
 
@@ -565,6 +564,7 @@ res = solve_ivp(metcal_ode, [0, sec], y1, method='DOP853',t_eval=ts, atol=1.e-11
 #res = OdeSolver(metcal_ode, 0, y1, sec, False)
 #res = solve_ivp(metcal_ode, [0, sec], y1, method='RK23', t_eval= ts)
 
+"""
 #res = solve_ivp(metcal_ode, [0, sec], y1, method='LSODA')
 #Correction of variables from sofia
 variables = {
@@ -590,7 +590,7 @@ n_rows = (len(variables_to_plot) + n_cols - 1) // n_cols  # Calculate required r
 ###
 #"""
 # Create subplots
-
+"""
 timev=res.t
 rang=sec-2000
 #uplim= np.where(timev == sec)[0][0]
@@ -626,17 +626,17 @@ plt.show()
 ###
 ### Plot Cac and ATPc ratio in time
 ###
-#"""
+"""
 
 
 
 fig2, ax = plt.subplots(figsize = (8, 5))
 plt.title('Cac vs ATPc')
-"""
+
 tg= res.t[downlim:uplim]
 cacg=res.y[5][downlim:uplim]
 atpg=res.y[3][downlim:uplim]
-"""
+
 tg= res.t
 cacg=res.y[5]
 atpg=res.y[3]
@@ -659,6 +659,9 @@ plt.tight_layout()
 # show plot
 plt.show()
 
+"""
+
+
 #"""
 
 #[2268:3813] valeries
@@ -666,42 +669,12 @@ plt.show()
 ### Plot ATP:ADP ratio in time
 ###
 """
-fig3, ax = plt.subplots(figsize = (8, 5))
-plt.title('ATPm : ADPm')
-
-ratio=res.y[4][downlim:uplim]/res.y[1][downlim:uplim]
-tg= res.t[downlim:uplim]
-
-# using the twinx() for creating another
-# axes object for secondary y-Axis
-ax2 = ax.twinx()
-ax.plot(tg, ratio, color = 'red')
-
-# giving labels to the axises
-ax.set_xlabel('time', color = 'black')
-ax.set_ylabel('ratio', color = 'red')
- 
- 
-# defining display layout 
-plt.tight_layout()
- 
-# show plot
-plt.show()
-"""
-
-#"""
-
-#[2268:3813] valeries
-###
-### Plot ATP:ADP ratio in time
-###
-#"""
 fig4, ax = plt.subplots(figsize = (8, 5))
 plt.title('ATPc : ADPc')
-"""
+
 ratio=res.y[3][downlim:uplim]/res.y[0][downlim:uplim]
 tg= res.t[downlim:uplim]
-"""
+
 ratio=res.y[3]/res.y[0]
 tg= res.t
 
@@ -722,12 +695,12 @@ plt.tight_layout()
 # show plot
 plt.show()
 
-#"""
+"""
 ###
 ### Plot all concentrations
 ###
 #"""
-
+"""
 flux_to_plot = [Jpdh_v, Jcs_v, Jaco_v,  Jidh_v, Jkgdh_v, Jsl_v, Jsdh_v, Jfh_v, Jmdh_v, Jerout_v, Jserca_v, Juni_v, Jncx_v, Jf1_v, Jhl_v, Jant_v, Jo_v, Jhyd_v]
 
 
@@ -784,6 +757,7 @@ for ax in axes[-n_cols_f:]:
 
 plt.tight_layout()
 plt.show()
+"""
 
-
+np.save('./19DE_pdh_berndt_DOP853res', np.array(res))
 
